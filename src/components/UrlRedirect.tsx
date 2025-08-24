@@ -21,9 +21,24 @@ const UrlRedirect: React.FC<RedirectPageProps> = ({ shortenedUrls, onUpdateClick
   const [countdown, setCountdown] = useState(5);
   const [redirecting, setRedirecting] = useState(false);
 
-  const foundUrl = shortenedUrls.find(url => 
-    url.shortUrl.endsWith(`/${alias}`) || url.customAlias === alias
-  );
+  console.log('Looking for alias:', alias);
+  console.log('Available URLs:', shortenedUrls);
+
+  const foundUrl = shortenedUrls.find(url => {
+    // First check if it matches the custom alias directly
+    if (url.customAlias && url.customAlias === alias) {
+      return true;
+    }
+    // Then check if it matches the generated ID from the short URL
+    const urlParts = url.shortUrl.split('/');
+    const urlAlias = urlParts[urlParts.length - 1];
+    if (urlAlias === alias) {
+      return true;
+    }
+    return false;
+  });
+
+  console.log('Found URL:', foundUrl);
 
   useEffect(() => {
     if (foundUrl && countdown > 0) {
@@ -34,7 +49,10 @@ const UrlRedirect: React.FC<RedirectPageProps> = ({ shortenedUrls, onUpdateClick
     } else if (foundUrl && countdown === 0) {
       setRedirecting(true);
       onUpdateClicks(foundUrl.id);
-      window.location.href = foundUrl.originalUrl;
+      // Use window.location.href for proper redirect
+      setTimeout(() => {
+        window.location.href = foundUrl.originalUrl;
+      }, 500);
     }
   }, [countdown, foundUrl, onUpdateClicks]);
 
@@ -130,3 +148,7 @@ const UrlRedirect: React.FC<RedirectPageProps> = ({ shortenedUrls, onUpdateClick
 };
 
 export default UrlRedirect;
+
+
+
+

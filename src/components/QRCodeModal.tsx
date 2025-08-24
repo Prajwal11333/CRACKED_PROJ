@@ -3,12 +3,13 @@ import { X, Download } from 'lucide-react';
 
 interface QRCodeModalProps {
   url: string;
+  originalUrl: string;
   onClose: () => void;
 }
 
-const QRCodeModal: React.FC<QRCodeModalProps> = ({ url, onClose }) => {
-  // Generate QR code URL using the passed URL (original URL for direct access)
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(url)}`;
+const QRCodeModal: React.FC<QRCodeModalProps> = ({ url, originalUrl, onClose }) => {
+  // Use the original URL for QR code so it redirects properly
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(originalUrl)}`;
 
   const downloadQRCode = () => {
     const link = document.createElement('a');
@@ -18,17 +19,16 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ url, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="text-xl font-bold text-gray-900">QR Code</h3>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <X className="w-6 h-6" />
+        </button>
+
+        <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">QR Code</h3>
 
         <div className="text-center">
           <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-xl mb-4">
@@ -41,7 +41,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ url, onClose }) => {
             />
           </div>
           
-          <p className="text-gray-600 mb-4 break-all font-mono text-sm bg-gray-50 p-2 rounded-lg">
+          <p className="text-blue-600 font-mono text-sm bg-blue-50 p-2 rounded-lg mb-4 break-all">
             {url}
           </p>
 
@@ -59,6 +59,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ url, onClose }) => {
 };
 
 export default QRCodeModal;
+
 
 
 

@@ -7,7 +7,7 @@ interface QRCodeModalProps {
 }
 
 const QRCodeModal: React.FC<QRCodeModalProps> = ({ url, onClose }) => {
-  // Generate QR code URL using a public API
+  // Generate QR code URL using the passed URL (original URL for direct access)
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(url)}`;
 
   const downloadQRCode = () => {
@@ -59,3 +59,6 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ url, onClose }) => {
 };
 
 export default QRCodeModal;
+
+
+

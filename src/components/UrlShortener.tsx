@@ -317,7 +317,7 @@ const UrlShortener: React.FC = () => {
 
         {showQRModal && selectedUrl && (
           <QRCodeModal
-            url={selectedUrl.shortUrl}
+            url={selectedUrl.originalUrl}
             onClose={() => {
               setShowQRModal(false);
               setSelectedUrl(null);

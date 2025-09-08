@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cracked - Share & Learn Interview Questions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🚀 Cracked</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link active">Home</a></li>
+                <li><a href="/submit" class="nav-link">Submit Question</a></li>
+                <li><a href="/browse" class="nav-link">Browse Questions</a></li>
+                <li><a href="/analytics" class="nav-link">Analytics</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Share & Learn Interview Questions</h1>
+                <p>Help fellow developers by sharing real interview questions you've encountered, and learn from others' experiences.</p>
+                <div class="hero-buttons">
+                    <a href="/submit" class="btn btn-primary">Share a Question</a>
+                    <a href="/browse" class="btn btn-secondary">Browse Questions</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>How It Works</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>Share Your Experience</h3>
+                        <p>Submit interview questions you were asked during your job interviews to help others prepare.</p>
+                        <a href="/submit" class="card-link">Submit Question →</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Learn from Others</h3>
+                        <p>Browse through real interview questions from various companies and topics to enhance your preparation.</p>
+                        <a href="/browse" class="card-link">Browse Questions →</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Track Trends</h3>
+                        <p>Analyze which companies ask what types of questions and understand difficulty distributions.</p>
+                        <a href="/analytics" class="card-link">View Analytics →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-preview">
+            <div class="container">
+                <h2>Platform Statistics</h2>
+                <div class="stats-grid" id="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-questions">-</div>
+                        <div class="stat-label">Total Questions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-companies">-</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Topics Covered</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Difficulty Levels</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="recent-questions">
+            <div class="container">
+                <h2>Recent Questions</h2>
+                <div id="recent-questions-list" class="questions-list">
+                    <div class="loading">Loading recent questions...</div>
+                </div>
+                <div class="section-footer">
+                    <a href="/browse" class="btn btn-outline">View All Questions</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Cracked - Share & Learn Interview Questions</p>
+                <p>Built with ❤️ for the developer community</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

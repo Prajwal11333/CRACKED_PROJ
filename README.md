@@ -1,180 +1,230 @@
-# LinkPro - Advanced URL Shortener with SEO Analysis
+# Cracked - Share & Learn Interview Questions
 
-A comprehensive, professional URL shortener application with real-time SEO analysis, clickbait detection, and advanced analytics. Built with React, TypeScript, and Tailwind CSS.
+A comprehensive platform where people who recently cracked interviews can share their questions to help beginners prepare better.
 
 ## 🚀 Features
 
-### Core Functionality
-- **Smart URL Shortening**: Create professional short links with custom aliases
-- **QR Code Generation**: Automatic QR code creation for all shortened URLs
-- **Real-time Redirect**: Functional URL redirection with click tracking
-- **Custom Aliases**: Personalized short URL endings
+### Backend (Node.js + Express + MongoDB)
+- **RESTful API** with comprehensive endpoints
+- **MongoDB Atlas** integration with Mongoose ODM
+- **Question Schema** with validation
+- **Analytics API** for dashboard insights
+- **CORS enabled** for frontend integration
+- **Sample seed data** for immediate testing
 
-### SEO & Analysis
-- **Real-time SEO Analysis**: Comprehensive SEO scoring and recommendations
-- **Clickbait Detection**: Intelligent analysis with severity indicators
-- **Bulk Processing**: Analyze multiple URLs simultaneously
-- **Performance Monitoring**: Load time and optimization tracking
+### Frontend (HTML, CSS, Vanilla JavaScript)
+- **Submit Questions** - Clean form for contributors
+- **Browse Questions** - Searchable table with filters
+- **Analytics Dashboard** - Visual charts and statistics
+- **Responsive Design** - Works on all devices
+- **Modern UI** - Professional styling with animations
 
-### Analytics & Insights
-- **Advanced Dashboard**: Comprehensive overview of URL performance
-- **Geographic Analytics**: Track clicks by country and region
-- **Device Analytics**: Monitor desktop, mobile, and tablet usage
-- **Time-based Tracking**: Historical data and trend analysis
+## 📦 Installation & Setup
 
-### Professional Features
-- **Export Functionality**: Download reports in JSON format
-- **Responsive Design**: Optimized for all devices and screen sizes
-- **Modern UI/UX**: Glassmorphism design with smooth animations
-- **Notification System**: Real-time feedback and alerts
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB Atlas account
 
-## 🛠️ Technology Stack
+### Quick Start
 
-- **Frontend**: React 18 with TypeScript
-- **Styling**: Tailwind CSS with custom gradients
-- **Routing**: React Router DOM
-- **Icons**: Lucide React
-- **Build Tool**: Vite
-- **Code Quality**: ESLint with TypeScript support
-
-## 📦 Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd linkpro
-```
-
-2. Install dependencies:
+1. **Install Dependencies**
 ```bash
 npm install
 ```
 
-3. Start the development server:
+2. **Configure Environment**
+   - Create a `.env` file in the root directory
+   - Add your MongoDB Atlas connection string:
+```env
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/cracked-interviews?retryWrites=true&w=majority
+PORT=3000
+```
+
+3. **Seed Sample Data**
+```bash
+npm run seed
+```
+
+4. **Start the Application**
+```bash
+npm start
+```
+For development with auto-restart:
 ```bash
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+5. **Access the Application**
+   - Home: http://localhost:3000
+   - Submit Questions: http://localhost:3000/submit
+   - Browse Questions: http://localhost:3000/browse
+   - Analytics: http://localhost:3000/analytics
+
+## 🎯 API Endpoints
+
+### Questions
+- `POST /api/questions` - Add new interview question
+- `GET /api/questions` - Get all questions with optional filters
+- `GET /api/questions/company/:companyName` - Get questions by company
+
+### Analytics
+- `GET /api/analysis` - Get comprehensive analytics data
 
 ## 🏗️ Project Structure
 
 ```
-src/
-├── components/
-│   ├── Header.tsx          # Navigation header
-│   ├── Hero.tsx            # Landing page hero section
-│   ├── UrlShortener.tsx    # Main URL shortening functionality
-│   ├── Analytics.tsx       # Analytics dashboard
-│   ├── SeoAnalyzer.tsx     # SEO analysis tool
-│   ├── Dashboard.tsx       # Main dashboard overview
-│   ├── Features.tsx        # Feature showcase
-│   ├── Footer.tsx          # Site footer
-│   ├── QRCodeModal.tsx     # QR code generation modal
-│   ├── UrlRedirect.tsx     # URL redirection handler
-│   └── NotificationSystem.tsx # Toast notifications
-├── App.tsx                 # Main application component
-├── main.tsx               # Application entry point
-└── index.css              # Global styles
+cracked-interview-questions/
+├── backend/
+│   ├── server.js          # Main server file
+│   └── seedData.js        # Sample data seeder
+├── frontend/
+│   ├── index.html         # Home page
+│   ├── submit.html        # Submit question page
+│   ├── browse.html        # Browse questions page
+│   ├── analytics.html     # Analytics dashboard
+│   ├── style.css          # Comprehensive styling
+│   ├── script.js          # Home page functionality
+│   ├── submit.js          # Submit form handling
+│   ├── browse.js          # Browse and filter logic
+│   └── analytics.js       # Charts and analytics
+├── package.json
+├── .env                   # Environment variables
+└── README.md
 ```
 
-## 🎯 Key Features for Placements
+## 📊 Database Schema
 
-### Technical Excellence
-- **Modern React Patterns**: Hooks, functional components, TypeScript
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **Performance Optimized**: Lazy loading, efficient state management
-- **Code Quality**: ESLint, TypeScript, clean architecture
+```javascript
+{
+  contributorName: String,    // Name of the person sharing
+  companyName: String,       // Company where interviewed
+  question: String,          // The actual question asked
+  topic: String,            // DSA, DBMS, OS, HR, etc.
+  difficulty: String,       // Easy, Medium, Hard
+  askedDate: Date,          // When the question was asked
+  createdAt: Date          // When shared on platform
+}
+```
 
-### Business Logic
-- **URL Validation**: Comprehensive input validation and error handling
-- **SEO Scoring Algorithm**: Custom algorithm for SEO analysis
-- **Clickbait Detection**: Machine learning-inspired content analysis
-- **Analytics Processing**: Real-time data aggregation and visualization
+## 🎨 Features Breakdown
 
-### User Experience
-- **Intuitive Interface**: Clean, professional design
-- **Real-time Feedback**: Instant notifications and status updates
-- **Accessibility**: WCAG compliant design patterns
-- **Cross-platform**: Works seamlessly across all devices
+### Submit Questions Page
+- Form validation with real-time feedback
+- Topic selection (DSA, DBMS, OS, HR, etc.)
+- Difficulty levels (Easy, Medium, Hard)
+- Date picker with validation
+- Success/error messaging
 
-## 🔧 Usage
-
-### URL Shortening
-1. Navigate to the URL Shortener tab
-2. Enter a long URL in the input field
-3. Optionally add a custom alias
-4. Click "Shorten URL" to generate a short link
-5. Use the generated link to redirect to the original URL
-
-### SEO Analysis
-1. Go to the SEO Analyzer tab
-2. Enter a URL for analysis
-3. Choose between single URL or bulk analysis
-4. Review the comprehensive SEO report
-5. Export results for further analysis
+### Browse Questions Page
+- Dynamic table with all questions
+- Real-time search by company name
+- Filter by topic and difficulty
+- Question count display
+- Responsive design for mobile
 
 ### Analytics Dashboard
-1. Visit the Dashboard tab for an overview
-2. Monitor click statistics and user engagement
-3. View geographic and device analytics
-4. Track performance over different time periods
+- Total questions and companies stats
+- Top 5 companies with most questions
+- Topic distribution bar chart
+- Difficulty distribution pie chart
+- Recent questions feed
+- Canvas-based visualizations
 
-## 🚀 Deployment
+## 🛠️ Technologies Used
 
-Build the project for production:
+### Backend
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **MongoDB Atlas** - Cloud database
+- **Mongoose** - ODM for MongoDB
+- **CORS** - Cross-origin resource sharing
+- **dotenv** - Environment configuration
 
-```bash
-npm run build
+### Frontend
+- **Vanilla JavaScript** - No frameworks
+- **HTML5** - Semantic markup
+- **CSS3** - Modern styling with animations
+- **Canvas API** - Custom charts and visualizations
+- **Responsive Design** - Mobile-first approach
+
+## 📱 Responsive Design
+
+The application is fully responsive with:
+- Mobile-first CSS approach
+- Flexible grid layouts
+- Touch-friendly interactions
+- Readable typography on all screen sizes
+- Optimized charts for mobile viewing
+
+## 🎯 Sample Data
+
+The seed script includes 15 sample questions covering:
+- **Companies**: Google, Microsoft, Amazon, Apple, Meta, etc.
+- **Topics**: DSA, DBMS, OS, System Design, HR, etc.
+- **Difficulties**: Easy, Medium, Hard
+- **Real interview questions** for immediate testing
+
+## 🚦 Usage Guide
+
+### For Contributors
+1. Visit `/submit` page
+2. Fill in your interview experience
+3. Select appropriate topic and difficulty
+4. Submit to help others
+
+### For Learners
+1. Visit `/browse` to explore all questions
+2. Use filters to find relevant questions
+3. Search by company or topic
+4. Check `/analytics` for trends
+
+### For Instructors
+- Perfect for classroom demonstrations
+- Real data with meaningful insights
+- Clean, professional interface
+- Easy to extend and modify
+
+## 🔧 Development
+
+### Adding New Topics
+Edit the topic enum in `backend/server.js`:
+```javascript
+enum: ['DSA', 'DBMS', 'OS', 'HR', 'YourNewTopic']
 ```
 
-The built files will be in the `dist` directory, ready for deployment to any static hosting service.
+### Customizing Charts
+Modify chart functions in `frontend/analytics.js`:
+- `drawBarChart()` for topic distribution
+- `drawPieChart()` for difficulty breakdown
 
-## 📈 Performance Features
+### Styling Changes
+All styles are in `frontend/style.css` with:
+- CSS custom properties for theming
+- Responsive breakpoints
+- Animation definitions
 
-- **Lazy Loading**: Components loaded on demand
-- **Optimized Images**: Efficient image handling and compression
-- **Caching Strategy**: Smart caching for better performance
-- **Bundle Optimization**: Tree shaking and code splitting
+## 📈 Future Enhancements
 
-## 🔒 Security Features
-
-- **Input Validation**: Comprehensive URL and input validation
-- **XSS Protection**: Sanitized user inputs
-- **HTTPS Enforcement**: Secure connections only
-- **Privacy Protection**: No sensitive data storage
-
-## 🎨 Design System
-
-- **Color Palette**: Blue to purple gradient theme
-- **Typography**: Clean, readable font hierarchy
-- **Spacing**: Consistent 8px grid system
-- **Components**: Reusable, modular design components
-
-## 📱 Responsive Breakpoints
-
-- **Mobile**: 320px - 768px
-- **Tablet**: 768px - 1024px
-- **Desktop**: 1024px+
-- **Large Desktop**: 1440px+
-
-## 🧪 Testing
-
-The application includes comprehensive error handling and validation:
-
-- URL format validation
-- Custom alias validation
-- Network error handling
-- Graceful fallbacks for unsupported features
-
-## 📄 License
-
-This project is created for educational and portfolio purposes.
+- User authentication and profiles
+- Question rating and comments
+- Advanced search with tags
+- Email notifications for new questions
+- Export functionality for analytics
+- REST API documentation with Swagger
 
 ## 🤝 Contributing
 
-This is a portfolio project, but suggestions and feedback are welcome!
+1. Fork the repository
+2. Create a feature branch
+3. Add your improvements
+4. Submit a pull request
+
+## 📄 License
+
+MIT License - feel free to use this project for educational purposes.
 
 ---
 
-**LinkPro** - Professional URL Management for the Modern Web
+**Built with ❤️ for the developer community**
+
+Perfect for computer science classrooms, coding bootcamps, and anyone preparing for technical interviews!

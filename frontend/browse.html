@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Questions - Cracked</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🚀 Cracked</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/submit" class="nav-link">Submit Question</a></li>
+                <li><a href="/browse" class="nav-link active">Browse Questions</a></li>
+                <li><a href="/analytics" class="nav-link">Analytics</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Browse Interview Questions</h1>
+                <p>Explore real interview questions shared by the community</p>
+            </div>
+
+            <div class="filters-section">
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="company-filter">Company</label>
+                        <input 
+                            type="text" 
+                            id="company-filter" 
+                            placeholder="Search by company..."
+                            class="filter-input"
+                        >
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="topic-filter">Topic</label>
+                        <select id="topic-filter" class="filter-select">
+                            <option value="">All Topics</option>
+                            <option value="DSA">Data Structures & Algorithms</option>
+                            <option value="DBMS">Database Management</option>
+                            <option value="OS">Operating Systems</option>
+                            <option value="System Design">System Design</option>
+                            <option value="OOP">Object Oriented Programming</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="HR">HR/Behavioral</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="difficulty-filter">Difficulty</label>
+                        <select id="difficulty-filter" class="filter-select">
+                            <option value="">All Difficulties</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                    
+                    <button id="clear-filters" class="btn btn-outline">Clear Filters</button>
+                </div>
+            </div>
+
+            <div class="questions-section">
+                <div class="section-header">
+                    <h2>Questions <span id="questions-count">(Loading...)</span></h2>
+                </div>
+                
+                <div id="questions-container" class="questions-table-container">
+                    <div class="loading">Loading questions...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Cracked - Share & Learn Interview Questions</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="browse.js"></script>
+</body>
+</html>

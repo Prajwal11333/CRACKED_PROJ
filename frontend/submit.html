@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Question - Cracked</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🚀 Cracked</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/submit" class="nav-link active">Submit Question</a></li>
+                <li><a href="/browse" class="nav-link">Browse Questions</a></li>
+                <li><a href="/analytics" class="nav-link">Analytics</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Submit Interview Question</h1>
+                <p>Help others by sharing the questions you were asked during your interview</p>
+            </div>
+
+            <div class="form-container">
+                <form id="submit-form" class="question-form">
+                    <div class="form-group">
+                        <label for="contributorName">Your Name *</label>
+                        <input 
+                            type="text" 
+                            id="contributorName" 
+                            name="contributorName" 
+                            required
+                            placeholder="Enter your name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="companyName">Company Name *</label>
+                        <input 
+                            type="text" 
+                            id="companyName" 
+                            name="companyName" 
+                            required
+                            placeholder="e.g., Google, Microsoft, Amazon"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="question">Interview Question *</label>
+                        <textarea 
+                            id="question" 
+                            name="question" 
+                            required
+                            placeholder="Describe the question you were asked..."
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="topic">Topic *</label>
+                            <select id="topic" name="topic" required>
+                                <option value="">Select Topic</option>
+                                <option value="DSA">Data Structures & Algorithms</option>
+                                <option value="DBMS">Database Management</option>
+                                <option value="OS">Operating Systems</option>
+                                <option value="System Design">System Design</option>
+                                <option value="OOP">Object Oriented Programming</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Machine Learning">Machine Learning</option>
+                                <option value="HR">HR/Behavioral</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="difficulty">Difficulty *</label>
+                            <select id="difficulty" name="difficulty" required>
+                                <option value="">Select Difficulty</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="askedDate">Date Asked *</label>
+                        <input 
+                            type="date" 
+                            id="askedDate" 
+                            name="askedDate" 
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span class="btn-text">Submit Question</span>
+                        <span class="btn-loading" style="display: none;">Submitting...</span>
+                    </button>
+                </form>
+
+                <div id="form-message" class="form-message" style="display: none;"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Cracked - Share & Learn Interview Questions</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="submit.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Cracked</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🚀 Cracked</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/submit" class="nav-link">Submit Question</a></li>
+                <li><a href="/browse" class="nav-link">Browse Questions</a></li>
+                <li><a href="/analytics" class="nav-link active">Analytics</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Analytics Dashboard</h1>
+                <p>Insights and trends from our interview questions database</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-questions">-</div>
+                    <div class="stat-label">Total Questions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-companies">-</div>
+                    <div class="stat-label">Companies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Topics</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Difficulty Levels</div>
+                </div>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>Top Companies</h3>
+                    <div id="top-companies" class="companies-list">
+                        <div class="loading">Loading...</div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <h3>Topics Distribution</h3>
+                    <canvas id="topics-chart" width="400" height="300"></canvas>
+                </div>
+
+                <div class="analytics-card">
+                    <h3>Difficulty Distribution</h3>
+                    <canvas id="difficulty-chart" width="400" height="300"></canvas>
+                </div>
+
+                <div class="analytics-card full-width">
+                    <h3>Recent Questions</h3>
+                    <div id="recent-questions" class="recent-questions-list">
+                        <div class="loading">Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Cracked - Share & Learn Interview Questions</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="analytics.js"></script>
+</body>
+</html>

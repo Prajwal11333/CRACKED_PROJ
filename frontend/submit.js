@@ -5,25 +5,286 @@ class SubmitPageManager {
     this.apiBase = '/api';
     this.form = document.getElementById('submit-form');
     this.messageDiv = document.getElementById('form-message');
+    this.cancelEditButton = document.getElementById('cancel-edit');
+    this.currentUser = null;
+    this.userQuestions = [];
+    this.editingQuestionId = null;
     this.init();
   }
 
-  init() {
-    // Set today's date as default
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('askedDate').value = today;
+  async init() {
+    this.setupAuthControls();
+    this.ensureAuthenticated();
+    await this.loadCurrentUser();
+    this.resetFormState();
+    await this.loadUserQuestions();
 
-    // Add form submit handler
     this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+    if (this.cancelEditButton) {
+      this.cancelEditButton.addEventListener('click', () => this.cancelEditing());
+    }
+  }
+
+  setupAuthControls() {
+    const loginLink = document.getElementById('login-link');
+    const logoutButton = document.getElementById('logout-button');
+    if (!loginLink || !logoutButton) return;
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      loginLink.style.display = 'none';
+      logoutButton.style.display = 'inline';
+    }
+
+    logoutButton.addEventListener('click', () => {
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('user');
+      window.location.href = '/login';
+    });
+  }
+
+  ensureAuthenticated() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login';
+    }
+  }
+
+  async loadCurrentUser() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${this.apiBase}/auth/me`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        this.currentUser = result.data;
+        const contributorInput = document.getElementById('contributorName');
+        if (contributorInput) {
+          contributorInput.value = this.currentUser.name;
+          contributorInput.disabled = true;
+        }
+      }
+    } catch (error) {
+      console.error('Error loading current user', error);
+    }
+  }
+
+  async loadUserQuestions() {
+    const token = this.getToken();
+    const container = document.getElementById('user-questions-list');
+    if (!token || !container) {
+      return;
+    }
+
+    container.innerHTML = '<div class="loading">Loading your questions...</div>';
+
+    try {
+      const response = await fetch(`${this.apiBase}/questions/mine`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        this.userQuestions = result.data || [];
+        this.renderUserQuestions();
+      } else {
+        this.showUserQuestionsError(result.message || 'Unable to load your questions.');
+      }
+    } catch (error) {
+      console.error('Error loading user questions', error);
+      this.showUserQuestionsError('Unable to load your questions.');
+    }
+  }
+
+  renderUserQuestions() {
+    const container = document.getElementById('user-questions-list');
+    if (!container) {
+      return;
+    }
+
+    if (!this.userQuestions.length) {
+      container.innerHTML = '<div class="loading">You have not submitted any questions yet.</div>';
+      return;
+    }
+
+    container.innerHTML = this.userQuestions.map(question => `
+      <div class="user-question-card">
+        <div class="user-question-header">
+          <div class="user-question-company">${this.escapeHtml(question.companyName || '')}</div>
+          <div class="user-question-actions">
+            <button class="action-button" data-action="edit" data-id="${question._id}">Edit</button>
+            <button class="action-button danger" data-action="delete" data-id="${question._id}">Delete</button>
+          </div>
+        </div>
+        <div class="user-question-body">${this.escapeHtml(question.question || '')}</div>
+        <div class="user-question-meta">
+          <span class="badge badge-topic">${this.escapeHtml(question.topic || '')}</span>
+          <span class="badge ${question.difficulty ? `badge-${question.difficulty.toLowerCase()}` : ''}">${this.escapeHtml(question.difficulty || '')}</span>
+          <span>${this.formatDate(question.askedDate)}</span>
+        </div>
+      </div>
+    `).join('');
+
+    container.querySelectorAll('[data-action="edit"]').forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-id');
+        const question = this.userQuestions.find(item => item._id === id);
+        if (question) {
+          this.setFormForEdit(question);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    });
+
+    container.querySelectorAll('[data-action="delete"]').forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-id');
+        if (confirm('Are you sure you want to delete this question?')) {
+          this.deleteQuestion(id);
+        }
+      });
+    });
+  }
+
+  setFormForEdit(question) {
+    this.editingQuestionId = question._id;
+
+    document.getElementById('companyName').value = question.companyName || '';
+    document.getElementById('question').value = question.question || '';
+    document.getElementById('topic').value = question.topic || '';
+    document.getElementById('difficulty').value = question.difficulty || '';
+    document.getElementById('askedDate').value = question.askedDate ? new Date(question.askedDate).toISOString().split('T')[0] : '';
+
+    const submitBtnText = this.form.querySelector('.btn-text');
+    if (submitBtnText) {
+      submitBtnText.textContent = 'Update Question';
+    }
+
+    if (this.cancelEditButton) {
+      this.cancelEditButton.style.display = 'block';
+    }
+  }
+
+  cancelEditing() {
+    this.resetFormState();
+    this.hideMessage();
+  }
+
+  resetFormState() {
+    this.editingQuestionId = null;
+    this.form.reset();
+    const askedDateInput = document.getElementById('askedDate');
+    if (askedDateInput) {
+      askedDateInput.value = new Date().toISOString().split('T')[0];
+    }
+    this.populateContributorName();
+    const submitBtnText = this.form.querySelector('.btn-text');
+    if (submitBtnText) {
+      submitBtnText.textContent = 'Submit Question';
+    }
+    if (this.cancelEditButton) {
+      this.cancelEditButton.style.display = 'none';
+    }
+  }
+
+  populateContributorName() {
+    const contributorInput = document.getElementById('contributorName');
+    if (contributorInput && this.currentUser) {
+      contributorInput.value = this.currentUser.name;
+      contributorInput.disabled = true;
+    }
+  }
+
+  showUserQuestionsError(message) {
+    const container = document.getElementById('user-questions-list');
+    if (container) {
+      container.innerHTML = `<div class="loading">${this.escapeHtml(message)}</div>`;
+    }
+  }
+
+  escapeHtml(text) {
+    if (text === undefined || text === null) {
+      return '';
+    }
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return text.toString().replace(/[&<>"']/g, match => map[match]);
+  }
+
+  formatDate(value) {
+    try {
+      if (!value) {
+        return '';
+      }
+      return new Date(value).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    } catch (error) {
+      return '';
+    }
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  async deleteQuestion(id) {
+    const token = this.getToken();
+    if (!token) {
+      this.showMessage('Please log in again to continue.', 'error');
+      this.ensureAuthenticated();
+      return;
+    }
+
+    try {
+      const response = await fetch(`${this.apiBase}/questions/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        this.showMessage('Question deleted successfully.', 'success');
+        await this.loadUserQuestions();
+        if (this.editingQuestionId === id) {
+          this.resetFormState();
+        }
+        setTimeout(() => {
+          this.hideMessage();
+        }, 5000);
+      } else {
+        this.showMessage(result.message || 'Failed to delete question.', 'error');
+      }
+    } catch (error) {
+      console.error('Error deleting question', error);
+      this.showMessage('Failed to delete question.', 'error');
+    }
   }
 
   async handleSubmit(e) {
     e.preventDefault();
     
-    // Get form data
     const formData = new FormData(this.form);
     const questionData = {
-      contributorName: formData.get('contributorName').trim(),
       companyName: formData.get('companyName').trim(),
       question: formData.get('question').trim(),
       topic: formData.get('topic'),
@@ -31,19 +292,29 @@ class SubmitPageManager {
       askedDate: formData.get('askedDate')
     };
 
-    // Validate form data
     if (!this.validateForm(questionData)) {
       return;
     }
 
-    // Show loading state
+    const token = this.getToken();
+    if (!token) {
+      this.showMessage('Please log in again to continue.', 'error');
+      this.ensureAuthenticated();
+      return;
+    }
+
+    const isEditing = Boolean(this.editingQuestionId);
+    const endpoint = isEditing ? `${this.apiBase}/questions/${this.editingQuestionId}` : `${this.apiBase}/questions`;
+    const method = isEditing ? 'PUT' : 'POST';
+
     this.setLoadingState(true);
 
     try {
-      const response = await fetch(`${this.apiBase}/questions`, {
-        method: 'POST',
+      const response = await fetch(endpoint, {
+        method,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(questionData)
       });
@@ -51,14 +322,10 @@ class SubmitPageManager {
       const result = await response.json();
 
       if (result.success) {
-        this.showMessage('Question submitted successfully! Thank you for contributing.', 'success');
-        this.form.reset();
-        
-        // Reset date to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('askedDate').value = today;
-        
-        // Auto-hide success message after 5 seconds
+        const successMessage = isEditing ? 'Question updated successfully.' : 'Question submitted successfully! Thank you for contributing.';
+        this.showMessage(successMessage, 'success');
+        this.resetFormState();
+        await this.loadUserQuestions();
         setTimeout(() => {
           this.hideMessage();
         }, 5000);
@@ -74,8 +341,7 @@ class SubmitPageManager {
   }
 
   validateForm(data) {
-    // Check for empty required fields
-    const requiredFields = ['contributorName', 'companyName', 'question', 'topic', 'difficulty', 'askedDate'];
+    const requiredFields = ['companyName', 'question', 'topic', 'difficulty', 'askedDate'];
     
     for (const field of requiredFields) {
       if (!data[field] || data[field].toString().trim() === '') {

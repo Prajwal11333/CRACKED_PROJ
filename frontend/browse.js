@@ -14,8 +14,27 @@ class BrowsePageManager {
   }
 
   async init() {
+    this.setupAuthControls();
     this.setupEventListeners();
     await this.loadQuestions();
+  }
+
+  setupAuthControls() {
+    const loginLink = document.getElementById('login-link');
+    const logoutButton = document.getElementById('logout-button');
+    if (!loginLink || !logoutButton) return;
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      loginLink.style.display = 'none';
+      logoutButton.style.display = 'inline';
+    }
+
+    logoutButton.addEventListener('click', () => {
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('user');
+      window.location.href = '/login';
+    });
   }
 
   setupEventListeners() {

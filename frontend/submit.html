@@ -17,6 +17,8 @@
                 <li><a href="/submit" class="nav-link active">Submit Question</a></li>
                 <li><a href="/browse" class="nav-link">Browse Questions</a></li>
                 <li><a href="/analytics" class="nav-link">Analytics</a></li>
+                <li><a href="/login" class="nav-link" id="login-link">Login</a></li>
+                <li><button class="nav-link" id="logout-button" style="display:none; border:none; background:none; cursor:pointer;">Logout</button></li>
             </ul>
         </div>
     </nav>
@@ -31,13 +33,13 @@
             <div class="form-container">
                 <form id="submit-form" class="question-form">
                     <div class="form-group">
-                        <label for="contributorName">Your Name *</label>
+                        <label for="contributorName">Your Name</label>
                         <input 
                             type="text" 
                             id="contributorName" 
                             name="contributorName" 
-                            required
                             placeholder="Enter your name"
+                            disabled
                         >
                     </div>
 
@@ -104,9 +106,17 @@
                         <span class="btn-text">Submit Question</span>
                         <span class="btn-loading" style="display: none;">Submitting...</span>
                     </button>
+                    <button type="button" class="btn btn-outline btn-full" id="cancel-edit" style="display: none; margin-top: 1rem;">Cancel Edit</button>
                 </form>
 
                 <div id="form-message" class="form-message" style="display: none;"></div>
+            </div>
+
+            <div class="user-questions-section">
+                <h2>Your Questions</h2>
+                <div id="user-questions-list" class="user-questions-list">
+                    <div class="loading">Loading your questions...</div>
+                </div>
             </div>
         </div>
     </main>

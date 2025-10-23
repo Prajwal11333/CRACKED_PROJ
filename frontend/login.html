@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cracked</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🚀 Cracked</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/submit" class="nav-link">Submit Question</a></li>
+                <li><a href="/browse" class="nav-link">Browse Questions</a></li>
+                <li><a href="/analytics" class="nav-link">Analytics</a></li>
+                <li><a href="/login" class="nav-link active" id="login-link">Login</a></li>
+                <li><button class="nav-link" id="logout-button" style="display:none; border:none; background:none; cursor:pointer;">Logout</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="auth-wrapper">
+                <h1>Access Your Account</h1>
+                <p class="auth-subtitle">Sign in to contribute questions or create a new account to get started.</p>
+                <div class="auth-tabs">
+                    <button id="login-tab" class="auth-tab active" type="button">Login</button>
+                    <button id="register-tab" class="auth-tab" type="button">Register</button>
+                </div>
+
+                <div id="auth-message" class="form-message" style="display:none;"></div>
+
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" name="email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" required placeholder="Enter your password" minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span class="btn-text">Login</span>
+                        <span class="btn-loading" style="display:none;">Signing in...</span>
+                    </button>
+                </form>
+
+                <form id="register-form" class="auth-form" style="display:none;">
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" name="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" name="email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" name="password" required placeholder="Create a password" minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span class="btn-text">Create Account</span>
+                        <span class="btn-loading" style="display:none;">Creating...</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Cracked - Share &amp; Learn Interview Questions</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="login.js"></script>
+</body>
+</html>

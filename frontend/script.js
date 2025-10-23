@@ -7,8 +7,27 @@ class HomePageManager {
   }
 
   async init() {
+    this.setupAuthControls();
     await this.loadStats();
     await this.loadRecentQuestions();
+  }
+
+  setupAuthControls() {
+    const loginLink = document.getElementById('login-link');
+    const logoutButton = document.getElementById('logout-button');
+    if (!loginLink || !logoutButton) return;
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      loginLink.style.display = 'none';
+      logoutButton.style.display = 'inline';
+    }
+
+    logoutButton.addEventListener('click', () => {
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('user');
+      window.location.href = '/login';
+    });
   }
 
   async loadStats() {
